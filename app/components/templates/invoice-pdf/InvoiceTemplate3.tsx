@@ -137,26 +137,36 @@ const InvoiceTemplate3 = (data: InvoiceType & { isPdf?: boolean; details: Invoic
                     <td style={{ padding: 8, border: "1.5px solid #000", textAlign: "right" }}>{item.total} {currency}</td>
                   </tr>
                 ))}
+                {/* Lignes totaux */}
+                <tr style={{ background: '#e5e5e5', fontWeight: 700 }}>
+                  <td colSpan={4} style={{ padding: 8, border: "1.5px solid #000", textAlign: 'center' }}>TOTAL</td>
+                  <td style={{ padding: 8, border: "1.5px solid #000", textAlign: 'right' }}>{formatNumberWithCommas(Number(details.subTotal))} {currency}</td>
+                </tr>
+                {details.taxDetails?.amount != undefined && details.taxDetails?.amount > 0 && (
+                  <tr style={{ background: '#e5e5e5', fontWeight: 700 }}>
+                    <td colSpan={4} style={{ padding: 8, border: "1.5px solid #000", textAlign: 'center' }}>TVA {details.taxDetails.amountType === 'amount' ? '' : `${details.taxDetails.amount} %`}</td>
+                    <td style={{ padding: 8, border: "1.5px solid #000", textAlign: 'right' }}>
+                      {details.taxDetails.amountType === 'amount'
+                        ? `+ ${formatNumberWithCommas(details.taxDetails.amount)} ${currency}`
+                        : `+ ${formatNumberWithCommas(Math.round(Number(details.subTotal) * details.taxDetails.amount / 100))} ${currency}`}
+                    </td>
+                  </tr>
+                )}
+                <tr style={{ background: '#dbeafe', fontWeight: 700, color: '#1e40af' }}>
+                  <td colSpan={4} style={{ padding: 8, border: "1.5px solid #000", textAlign: 'center' }}>TOTAL TTC</td>
+                  <td style={{ padding: 8, border: "1.5px solid #000", textAlign: 'right' }}>{formatNumberWithCommas(Number(totalValid))} {currency}</td>
+                </tr>
               </tbody>
             </table>
           </div>
           <div style={{ marginTop: 24, display: "flex", justifyContent: "flex-end", padding: "0 32px" }}>
             <table style={{ minWidth: 280, fontSize: 13, background: "rgba(255, 255, 255, 0)" }}>
               <tbody>
+                {/*
                 <tr>
                   <td style={{ padding: 4 }}>Sous-total :</td>
                   <td style={{ padding: 4, textAlign: "right" }}>{formatNumberWithCommas(Number(details.subTotal))} {currency}</td>
                 </tr>
-                {details.discountDetails?.amount != undefined && details.discountDetails?.amount > 0 && (
-                  <tr>
-                    <td style={{ padding: 4 }}>Remise :</td>
-                    <td style={{ padding: 4, textAlign: "right" }}>
-                      {details.discountDetails.amountType === "amount"
-                        ? `- ${details.discountDetails.amount} ${currency}`
-                        : `- ${details.discountDetails.amount}%`}
-                    </td>
-                  </tr>
-                )}
                 {details.taxDetails?.amount != undefined && details.taxDetails?.amount > 0 && (
                   <tr>
                     <td style={{ padding: 4 }}>Taxe :</td>
@@ -164,6 +174,17 @@ const InvoiceTemplate3 = (data: InvoiceType & { isPdf?: boolean; details: Invoic
                       {details.taxDetails.amountType === "amount"
                         ? `+ ${details.taxDetails.amount} ${currency}`
                         : `+ ${details.taxDetails.amount}%`}
+                    </td>
+                  </tr>
+                )}
+                */}
+                {details.discountDetails?.amount != undefined && details.discountDetails?.amount > 0 && (
+                  <tr>
+                    <td style={{ padding: 4 }}>Remise :</td>
+                    <td style={{ padding: 4, textAlign: "right" }}>
+                      {details.discountDetails.amountType === "amount"
+                        ? `- ${details.discountDetails.amount} ${currency}`
+                        : `- ${details.discountDetails.amount}%`}
                     </td>
                   </tr>
                 )}
