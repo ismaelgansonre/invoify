@@ -81,10 +81,40 @@ const BillFromSection = () => {
                 inputMode="tel"
                 pattern="[0-9+\-\(\)\s]*"
                 aria-describedby="phone-format"
-                onInput={(e) => {
-                    const target = e.target as HTMLInputElement;
+                onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    const target = e.target;
                     target.value = target.value.replace(/[^\d\+\-\(\)\s]/g, "");
                 }}
+            />
+            <FormInput
+                name="sender.attn"
+                label={_t("form.steps.fromAndTo.attn")}
+                placeholder="Émis par (optionnel)"
+            />
+            <FormInput
+                name="sender.rni"
+                label={_t("form.steps.fromAndTo.rni")}
+                placeholder="RNI (optionnel)"
+            />
+            <FormInput
+                name="sender.ifu"
+                label={_t("form.steps.fromAndTo.ifu")}
+                placeholder="IFU (optionnel)"
+            />
+            <FormInput
+                name="sender.rccm"
+                label={_t("form.steps.fromAndTo.rccm")}
+                placeholder="RCCM (optionnel)"
+            />
+            <FormInput
+                name="sender.capital"
+                label={_t("form.steps.fromAndTo.capital")}
+                placeholder="Capital social (optionnel)"
+            />
+            <FormInput
+                name="sender.bankAccount"
+                label={_t("form.steps.fromAndTo.bankAccount")}
+                placeholder="Compte bancaire (optionnel)"
             />
 
             {/* //? key = field.id fixes a bug where wrong field gets deleted  */}

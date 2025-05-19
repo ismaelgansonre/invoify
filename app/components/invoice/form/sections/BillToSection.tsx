@@ -87,6 +87,21 @@ const BillToSection = () => {
                     target.value = target.value.replace(/[^\d\+\-\(\)\s]/g, "");
                 }}
             />
+            <FormInput
+                name="receiver.rccm"
+                label={_t("form.steps.fromAndTo.rccm")}
+                placeholder="RCCM (optionnel)"
+            />
+            <FormInput
+                name="receiver.ifu"
+                label={_t("form.steps.fromAndTo.ifu")}
+                placeholder="IFU (optionnel)"
+            />
+            <FormInput
+                name="receiver.otherContact"
+                label={_t("form.steps.fromAndTo.otherContact")}
+                placeholder="Contact supplémentaire (optionnel)"
+            />
 
             {/* //? key = field.id fixes a bug where wrong field gets deleted  */}
             {fields?.map((field, index) => (

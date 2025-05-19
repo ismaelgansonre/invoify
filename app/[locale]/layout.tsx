@@ -69,8 +69,12 @@ export default async function LocaleLayout({
     children,
     params,
 }: LayoutProps) {
-    // Récupération de la locale des paramètres d'URL
-    const locale = params?.locale;
+    if (!params || !params.locale) {
+        // Si params ou locale est absent, on affiche une erreur explicite côté serveur
+        console.error('LocaleLayout: params ou params.locale est manquant');
+        notFound();
+    }
+    const locale = params.locale;
 
     // Validate that the locale is configured
     const isValidLocale = LOCALES.some(l => l.code === locale);

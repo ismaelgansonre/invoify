@@ -4,13 +4,38 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
+        // Debug Next.js app dans Chrome
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
+            "name": "Debug Next.js in Chrome",
+            "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}"
+        },
+        // Debug Next.js app dans Edge (utilise le type chrome, mais lance Edge)
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Debug Next.js in Edge",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "msedge"
+        },
+        // Debug API/server Node.js (Next.js backend)
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Next.js Server (Node.js)",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "dev"
+            ],
+            "env": {
+                "NODE_OPTIONS": "--inspect"
+            },
+            "console": "integratedTerminal",
+            "skipFiles": ["<node_internals>/**"]
         }
     ]
 }

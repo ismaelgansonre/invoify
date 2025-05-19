@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { Buffer } from "buffer";
 // Utils
 import numberToWords from "number-to-words";
+import n2words from "n2words";
 
 // Currencies
 import currenciesDetails from "@/public/assets/data/currencies.json";
@@ -114,6 +115,22 @@ const formatPriceToString = (price: number, currency: string): string => {
 };
 
 /**
+ * Convertit un montant en lettres (français, FCFA)
+ * @param {number} amount - Le montant à convertir
+ * @param {string} [lang='fr'] - La langue (par défaut 'fr')
+ * @returns {string} Le montant en toutes lettres
+ */
+const toWords = (amount: number, lang: string = 'fr'): string => {
+    if (isNaN(amount)) return '';
+    try {
+        // n2words gère le français, retourne en majuscules pour cohérence
+        return n2words(Math.floor(amount), { lang }).toUpperCase() + ' FRANCS CFA';
+    } catch {
+        return '';
+    }
+};
+
+/**
  * This method flattens a nested object. It is used for xlsx export
  *
  * @param {Record<string, T>} obj - A nested object to flatten
@@ -215,4 +232,5 @@ export {
     isDataUrl,
     getInvoiceTemplate,
     fileToBuffer,
+    toWords,
 };

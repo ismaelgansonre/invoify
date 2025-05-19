@@ -1,13 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { InvoiceLayout } from "@/app/components";
-import { formatNumberWithCommas, isDataUrl } from "@/lib/helpers";
+import { formatNumberWithCommas, isDataUrl, toWords } from "@/lib/helpers";
 import { DATE_OPTIONS } from "@/lib/variables";
 import { InvoiceType } from "@/types";
-import n2words from "n2words";
 
-const InvoiceTemplate3 = (data: InvoiceType) => {
-  const { sender, receiver, details } = data;
+const InvoiceTemplate3 = (data: InvoiceType & { isPdf?: boolean }) => {
+  const { sender, receiver, details, isPdf } = data;
   // Forcer la devise à Francs CFA
   const currency = "F CFA";
   // Calcul du total TTC à partir des items et des champs de détails
@@ -23,7 +22,8 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
     totalValid += Number(details.shippingDetails.cost) || 0;
   }
   if (isNaN(totalValid)) totalValid = 0;
-  const totalInWords = n2words(totalValid, { lang: "fr" }).toUpperCase();
+  // Utiliser le helper toWords pour la conversion en lettres
+  const totalInWords = toWords(totalValid, "fr");
 
   return (
     <InvoiceLayout data={data}>
@@ -41,7 +41,15 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
       >
         {/* Header avec logo et slogan */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "32px 32px 0 32px" }}>
-          {/* ...logo et autres éléments... */}
+          {/* Logo : utiliser <img> si isPdf, sinon <Image> */}
+          {details.invoiceLogo && (
+            isPdf ? (
+              <img src={details.invoiceLogo} width={140} height={100} alt={`Logo de ${sender.name}`} />
+            ) : (
+              <Image src={details.invoiceLogo} width={140} height={100} alt={`Logo de ${sender.name}`} />
+            )
+          )}
+          {/* ...autres éléments... */}
         </div>
         {/* Présentation Propriétaire / Destinataire */}
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: 32, margin: '32px 32px 0 32px'}}>
@@ -158,7 +166,11 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
           <div style={{ marginTop: 24, display: 'flex', justifyContent: 'flex-end' }}>
             <div style={{textAlign: 'right'}}>
               <span style={{ fontWeight: 600 }}>Signature :</span><br />
-              <Image src={details.signature.data} width={120} height={60} alt={`Signature de ${sender.name}`} />
+              {isPdf ? (
+                <img src={details.signature.data} width={120} height={60} alt={`Signature de ${sender.name}`} />
+              ) : (
+                <Image src={details.signature.data} width={120} height={60} alt={`Signature de ${sender.name}`} />
+              )}
             </div>
           </div>
         ) : details.signature?.data ? (

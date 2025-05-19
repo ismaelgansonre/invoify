@@ -126,6 +126,12 @@ export const FORM_DEFAULT_VALUES = {
         email: "",
         phone: "",
         customInputs: [],
+        rni: "",
+        ifu: "",
+        rccm: "",
+        attn: "",
+        capital: "",
+        bankAccount: "",
     },
     receiver: {
         name: "",
@@ -136,6 +142,9 @@ export const FORM_DEFAULT_VALUES = {
         email: "",
         phone: "",
         customInputs: [],
+        rccm: "",
+        ifu: "",
+        otherContact: "",
     },
     details: {
         invoiceLogo: "",
@@ -149,6 +158,8 @@ export const FORM_DEFAULT_VALUES = {
                 quantity: 0,
                 unitPrice: 0,
                 total: 0,
+                status: "",
+                eom: "",
             },
         ],
         currency: "USD",
@@ -175,6 +186,10 @@ export const FORM_DEFAULT_VALUES = {
         paymentTerms: "",
         totalAmountInWords: "",
         pdfTemplate: 1,
+        orderNumber: "",
+        projectCode: "",
+        deliveryPlace: "",
+        deliveryTime: "",
     },
 };
 

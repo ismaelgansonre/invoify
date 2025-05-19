@@ -53,6 +53,30 @@ const InvoiceDetails = () => {
                         label={_t("form.steps.invoiceDetails.currency")}
                         placeholder="Select Currency"
                     />
+
+                    <FormInput
+                        name="details.orderNumber"
+                        label={_t("form.steps.invoiceDetails.orderNumber")}
+                        placeholder="Référence (optionnel)"
+                    />
+
+                    <FormInput
+                        name="details.projectCode"
+                        label={_t("form.steps.invoiceDetails.projectCode")}
+                        placeholder="POSOM ID (optionnel)"
+                    />
+
+                    <FormInput
+                        name="details.deliveryPlace"
+                        label={_t("form.steps.invoiceDetails.deliveryPlace")}
+                        placeholder="Lieu de livraison (optionnel)"
+                    />
+
+                    <FormInput
+                        name="details.deliveryTime"
+                        label={_t("form.steps.invoiceDetails.deliveryTime")}
+                        placeholder="Délai de livraison (optionnel)"
+                    />
                 </div>
 
                 <div className="flex flex-col gap-2">

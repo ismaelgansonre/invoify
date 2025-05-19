@@ -5,7 +5,7 @@ import Image from "next/image";
 import { InvoiceLayout } from "@/app/components";
 
 // Helpers
-import { formatNumberWithCommas, isDataUrl } from "@/lib/helpers";
+import { formatNumberWithCommas, isDataUrl, toWords } from "@/lib/helpers";
 
 // Variables
 import { DATE_OPTIONS } from "@/lib/variables";
@@ -157,13 +157,12 @@ const InvoiceTemplate = (data: InvoiceType) => {
 								{formatNumberWithCommas(Number(details.totalAmount))} {details.currency}
 							</dd>
 						</dl>
-						{details.totalAmountInWords && (
+						{/* Affichage du montant en lettres */}
+						{details.totalAmount !== undefined && (
 							<dl className='grid sm:grid-cols-5 gap-x-3'>
-								<dt className='col-span-3 font-semibold text-gray-800'>Total in words:</dt>
+								<dt className='col-span-3 font-semibold text-gray-800'>Total en lettres :</dt>
 								<dd className='col-span-2 text-gray-500'>
-									<em>
-										{details.totalAmountInWords} {details.currency}
-									</em>
+									<em>{toWords(Number(details.totalAmount), 'fr')}</em>
 								</dd>
 							</dl>
 						)}
@@ -200,7 +199,7 @@ const InvoiceTemplate = (data: InvoiceType) => {
 			</div>
 
 			{/* Signature */}
-			{details?.signature?.data && isDataUrl(details?.signature?.data) ? (
+			{details?.signature?.data && isDataUrl(details.signature.data) ? (
 				<div className='mt-6'>
 					<p className='font-semibold text-gray-800'>Signature:</p>
 					<Image
@@ -210,14 +209,14 @@ const InvoiceTemplate = (data: InvoiceType) => {
 						alt={`Signature of ${sender.name}`}
 					/>
 				</div>
-			) : details.signature?.data ? (
+			) : details?.signature?.data ? (
 				<div className='mt-6'>
 					<p className='text-gray-800'>Signature:</p>
 					<p
 						style={{
 							fontSize: 30,
 							fontWeight: 400,
-							fontFamily: `${details.signature.fontFamily}, cursive`,
+							fontFamily: `${details.signature.fontFamily || 'cursive'}, cursive`,
 							color: "black",
 						}}
 					>
