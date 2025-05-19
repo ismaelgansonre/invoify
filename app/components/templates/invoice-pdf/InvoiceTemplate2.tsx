@@ -5,7 +5,7 @@ import Image from "next/image";
 import { InvoiceLayout } from "@/app/components";
 
 // Helpers
-import { formatNumberWithCommas, isDataUrl } from "@/lib/helpers";
+import { formatNumberWithCommas, isDataUrl, toWords } from "@/lib/helpers";
 
 // Variables
 import { DATE_OPTIONS } from "@/lib/variables";
@@ -227,16 +227,14 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                                 {details.currency}
                             </dd>
                         </dl>
-                        {details.totalAmountInWords && (
+                        {/* Affichage du montant en lettres */}
+                        {details.totalAmount !== undefined && (
                             <dl className="grid sm:grid-cols-5 gap-x-3">
                                 <dt className="col-span-3 font-semibold text-gray-800">
-                                    Total in words:
+                                    Total en lettres :
                                 </dt>
                                 <dd className="col-span-2 text-gray-500">
-                                    <em>
-                                        {details.totalAmountInWords}{" "}
-                                        {details.currency}
-                                    </em>
+                                    <em>{toWords(Number(details.totalAmount), 'fr')}</em>
                                 </dd>
                             </dl>
                         )}

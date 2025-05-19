@@ -95,6 +95,13 @@ const InvoiceSenderSchema = z.object({
     email: fieldValidators.email,
     phone: fieldValidators.phone,
     customInputs: z.array(CustomInputSchema).optional(),
+    // Champs spécifiques pour le template 3
+    rni: fieldValidators.stringOptional, // Numéro RNI
+    ifu: fieldValidators.stringOptional, // Numéro IFU
+    rccm: fieldValidators.stringOptional, // Numéro RCCM
+    attn: fieldValidators.stringOptional, // Émis par
+    capital: fieldValidators.stringOptional, // Capital social
+    bankAccount: fieldValidators.stringOptional, // Compte bancaire
 });
 
 const InvoiceReceiverSchema = z.object({
@@ -106,6 +113,10 @@ const InvoiceReceiverSchema = z.object({
     email: fieldValidators.email,
     phone: fieldValidators.phone,
     customInputs: z.array(CustomInputSchema).optional(),
+    // Champs spécifiques pour le template 3
+    rccm: fieldValidators.stringOptional, // Numéro RCCM
+    ifu: fieldValidators.stringOptional, // Numéro IFU
+    otherContact: fieldValidators.stringOptional, // Contact supplémentaire
 });
 
 const ItemSchema = z.object({
@@ -164,6 +175,11 @@ const InvoiceDetailsSchema = z.object({
     signature: SignatureSchema.optional(),
     updatedAt: fieldValidators.stringOptional,
     pdfTemplate: z.number(),
+    // Champs spécifiques pour le template 3
+    orderNumber: fieldValidators.stringOptional, // Référence
+    projectCode: fieldValidators.stringOptional, // POSOM ID
+    deliveryPlace: fieldValidators.stringOptional, // Lieu de livraison
+    deliveryTime: fieldValidators.stringOptional, // Délai de livraison
 });
 
 const InvoiceSchema = z.object({
